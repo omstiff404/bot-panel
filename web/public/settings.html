@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pengaturan — WA Bot Dashboard</title>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+
+<div class="settings-layout">
+
+  <!-- Sidebar pengaturan permanen -->
+  <aside class="settings-sidebar">
+    <div class="sidebar-head">
+      <div class="logo-dot"></div>
+      <h2>Pengaturan Bot</h2>
+    </div>
+    <nav class="settings-nav">
+      <div class="nav-divider">Bot Saya</div>
+      <button class="nav-item active" data-section="home">🏠 Status Bot</button>
+      <button class="nav-item" data-section="pairing">📶 Pairing Code</button>
+
+      <div class="nav-divider">Bot</div>
+      <button class="nav-item" data-section="theme">🎨 Tema UI</button>
+      <button class="nav-item" data-section="general">⚙️ Pengaturan Umum</button>
+      <button class="nav-item" data-section="menu-media">🖼️ Menu &amp; Media</button>
+      <button class="nav-item" data-section="moderation">🛡️ Moderasi &amp; Batasan</button>
+      <button class="nav-item" data-section="behavior">🤖 Perilaku Bot</button>
+
+      <div class="nav-divider">Kelola</div>
+      <button class="nav-item" data-section="features">🧩 Tambah Fitur</button>
+      <button class="nav-item" data-section="limit-vip">💎 Limit &amp; VIP</button>
+      <button class="nav-item" data-section="users">👥 Daftar User</button>
+
+      <div class="nav-divider">Akun</div>
+      <button class="nav-item hidden" id="navAdminAccounts" data-section="admin-accounts">🗂️ Kelola Akun</button>
+      <button class="nav-item" data-section="account">🔑 Akun Dashboard</button>
+    </nav>
+    <div class="sidebar-foot" style="margin-top:20px; display:flex; flex-direction:column; gap:8px;">
+      <a href="/" class="theme-toggle" style="display:block; text-align:center; text-decoration:none; color: var(--text);">← Ke Beranda</a>
+      <button id="themeToggle" class="theme-toggle">🌙 Mode Gelap</button>
+      <button id="logoutBtn" class="btn-secondary">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Konten pengaturan -->
+  <main class="settings-main">
+
+    <!-- ===== BOT SAYA (status) ===== -->
+    <section id="section-home" class="settings-section active">
+      <h1>🏠 Status Bot Kamu</h1>
+      <div class="hero" style="text-align:left;">
+        <div class="avatar-wrap" style="margin: 0 0 14px;">
+          <img id="botAvatar" src="/img/default-avatar.svg" alt="avatar" />
+          <span id="statusDot" class="status-dot offline"></span>
+        </div>
+        <h2 id="botNameText">Bot Kamu</h2>
+        <p id="statusText" class="status-text">Menghubungkan...</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-label">⏱️ Runtime</span>
+          <span id="statRuntime" class="stat-value">0d 0h 0m</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">🕐 Jam (Asia/Jakarta)</span>
+          <span id="statClock" class="stat-value mono">00:00:00</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">⚙️ Total Fitur</span>
+          <span id="statFeatures" class="stat-value">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">👥 Total User</span>
+          <span id="statUsers" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <div class="info-panel">
+        <h3>Informasi Bot</h3>
+        <ul class="info-list">
+          <li><span>Nomor Bot</span><b id="infoNumber">Disembunyikan</b></li>
+          <li><span>Push Name</span><b id="infoPushName">-</b></li>
+          <li><span>Terhubung sejak</span><b id="infoConnected">-</b></li>
+        </ul>
+        <p class="muted" style="margin-top: 10px;">
+          Nomor bot disamarkan di dashboard untuk privasi — hanya sebagian digit yang ditampilkan.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== PAIRING CODE ===== -->
+    <section id="section-pairing" class="settings-section">
+      <h1>📶 Pairing Code</h1>
+
+      <div id="pairingFormWrap">
+        <p class="muted">Hubungkan nomor WhatsApp bot tanpa scan QR.</p>
+        <label>Nomor WhatsApp Bot</label>
+        <input id="pairingNumberInput" type="text" placeholder="628123456789" />
+        <button id="pairingSubmit" class="btn-primary">Kirim Kode Pairing</button>
+        <div id="pairingResult" class="pairing-code hidden"></div>
+      </div>
+
+      <div id="pairingConnectedWrap" class="hidden">
+        <p class="muted">✅ Bot sudah terhubung. Kalau mau ganti nomor, hapus sesi dulu di bawah ini.</p>
+        <button id="deleteSessionBtn" class="btn-secondary" style="color: var(--danger); border-color: var(--danger);">🗑️ Hapus Sesi</button>
+        <p id="sessionDeleted" class="success-text"></p>
+      </div>
+    </section>
+
+    <!-- ===== TEMA UI ===== -->
+    <section id="section-theme" class="settings-section">
+      <h1>🎨 Tema Tampilan</h1>
+      <p class="muted">Pilih gaya tampilan dashboard. Tersimpan di perangkat ini.</p>
+      <div class="theme-grid">
+        <div class="theme-card" data-theme="default">
+          <div class="theme-swatch swatch-default"></div>
+          <b>Default</b>
+          <span class="muted" style="font-size:12px;">Cyan futuristik (yang dipakai sekarang)</span>
+        </div>
+        <div class="theme-card" data-theme="anime">
+          <div class="theme-swatch swatch-anime"></div>
+          <b>Anime Modern</b>
+          <span class="muted" style="font-size:12px;">Pink-ungu, bentuk membulat, sparkle</span>
+        </div>
+        <div class="theme-card" data-theme="holo">
+          <div class="theme-swatch swatch-holo"></div>
+          <b>Holo</b>
+          <span class="muted" style="font-size:12px;">Kaca transparan, border shimmer warna-warni</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PENGATURAN UMUM ===== -->
+    <section id="section-general" class="settings-section">
+      <h1>⚙️ Pengaturan Umum</h1>
+      <label>Nama Bot</label>
+      <input id="setBotName" type="text" />
+      <label>Prefix Command</label>
+      <input id="setPrefix" type="text" maxlength="3" />
+      <label>Nomor Owner (pisahkan koma)</label>
+      <input id="setOwners" type="text" placeholder="628111111111, 628222222222" />
+      <label>Timezone</label>
+      <input id="setTimezone" type="text" value="Asia/Jakarta" />
+      <label>Bahasa Bot</label>
+      <select id="setLanguage">
+        <option value="id">Indonesia</option>
+        <option value="en">English</option>
+      </select>
+      <label>Support Contact (link tombol Support di beranda)</label>
+      <input id="setSupport" type="text" />
+      <label>Nomor Owner untuk Pesan Error / Limit Habis</label>
+      <input id="setOwnerContact" type="text" placeholder="6283879685072" />
+      <label>Mode Akses</label>
+      <div class="switch-row">
+        <label><input id="setPublicMode" type="checkbox" /> Mode Publik (semua orang bisa pakai)</label>
+      </div>
+      <button id="saveGeneralBtn" class="btn-primary">Simpan Pengaturan Umum</button>
+      <p id="generalSaved" class="success-text"></p>
+    </section>
+
+    <!-- ===== MENU & MEDIA ===== -->
+    <section id="section-menu-media" class="settings-section">
+      <h1>🖼️ Menu &amp; Media</h1>
+      <p class="muted">Gambar dan musik ini otomatis dikirim tiap ada yang mengetik command menu.</p>
+
+      <label>Gambar Header Menu</label>
+      <div id="imagePreview" class="media-preview hidden">
+        <img id="imagePreviewImg" src="" alt="preview" />
+        <span>Gambar menu aktif</span>
+        <button class="remove-btn" id="removeImageBtn">Hapus</button>
+      </div>
+      <div class="upload-row">
+        <input id="menuImageFile" type="file" accept="image/*" />
+        <button id="uploadImageBtn" class="btn-primary" style="width:auto; padding:10px 18px;">Upload Gambar</button>
+      </div>
+
+      <label>Musik / Audio Menu</label>
+      <div id="audioPreview" class="media-preview hidden">
+        <span>🎵</span>
+        <span id="audioPreviewName">Audio menu aktif</span>
+        <button class="remove-btn" id="removeAudioBtn">Hapus</button>
+      </div>
+      <div class="upload-row">
+        <input id="menuAudioFile" type="file" accept="audio/*" />
+        <button id="uploadAudioBtn" class="btn-primary" style="width:auto; padding:10px 18px;">Upload Audio</button>
+      </div>
+
+      <label>Footer Teks Menu</label>
+      <input id="setMenuFooter" type="text" />
+      <label>Nama Pack Stiker</label>
+      <input id="setStickerPackname" type="text" />
+      <label>Author Stiker</label>
+      <input id="setStickerAuthor" type="text" />
+      <button id="saveMenuBtn" class="btn-primary">Simpan Menu &amp; Media</button>
+      <p id="menuSaved" class="success-text"></p>
+    </section>
+
+    <!-- ===== MODERASI ===== -->
+    <section id="section-moderation" class="settings-section">
+      <h1>🛡️ Moderasi &amp; Batasan</h1>
+      <div class="switch-row">
+        <label><input id="setAntiSpam" type="checkbox" /> Anti Spam</label>
+        <label><input id="setAntiLink" type="checkbox" /> Anti Link (grup)</label>
+        <label><input id="setAntiToxic" type="checkbox" /> Anti Kata Kasar</label>
+        <label><input id="setAntiCall" type="checkbox" /> Tolak Panggilan Otomatis</label>
+        <label><input id="setMaintenance" type="checkbox" /> Mode Maintenance (khusus owner)</label>
+        <label><input id="setRestrictGroups" type="checkbox" /> Bot Hanya di Grup</label>
+        <label><input id="setRestrictPrivate" type="checkbox" /> Bot Hanya Chat Pribadi</label>
+      </div>
+      <button id="saveModerationBtn" class="btn-primary">Simpan Moderasi</button>
+      <p id="moderationSaved" class="success-text"></p>
+    </section>
+
+    <!-- ===== PERILAKU BOT ===== -->
+    <section id="section-behavior" class="settings-section">
+      <h1>🤖 Perilaku Bot</h1>
+      <div class="switch-row">
+        <label><input id="setAutoRead" type="checkbox" /> Auto Read Pesan</label>
+        <label><input id="setAutoTyping" type="checkbox" /> Auto Typing</label>
+        <label><input id="setAutoOnline" type="checkbox" /> Selalu Online</label>
+        <label><input id="setMarkOnline" type="checkbox" /> Online Otomatis Saat Connect</label>
+      </div>
+      <p class="muted" style="margin-top: -6px;">
+        Welcome/leave grup diatur langsung oleh admin tiap grup lewat <code>.setwelcome on/off</code>
+        dan <code>.setleave on/off</code> di chat grup — tidak ada saklar global.
+      </p>
+      <label>Jeda Balasan (ms)</label>
+      <input id="setResponseDelay" type="number" min="0" step="100" />
+      <label>Auto Bio / About (kosongkan jika tidak dipakai)</label>
+      <input id="setAutoBio" type="text" />
+      <button id="saveBehaviorBtn" class="btn-primary">Simpan Perilaku</button>
+      <p id="behaviorSaved" class="success-text"></p>
+    </section>
+
+    <!-- ===== TAMBAH FITUR ===== -->
+    <section id="section-features" class="settings-section">
+      <h1>🧩 Tambah / Kelola Fitur (Plugin)</h1>
+      <label>Nama File (contoh: sticker.js)</label>
+      <input id="featureFilename" type="text" placeholder="sticker.js" />
+      <label>Kode Plugin (JavaScript)</label>
+      <textarea id="featureCode" rows="12" placeholder="module.exports = { name: 'sticker', command: ['sticker'], category: 'tools', description: '...', run: async (ctx) => { ... } }"></textarea>
+      <button id="saveFeatureBtn" class="btn-primary">Simpan Fitur</button>
+      <p id="featureSaved" class="success-text"></p>
+
+      <h4 style="margin-top:20px;">Fitur Terpasang</h4>
+      <ul id="pluginList" class="plugin-list"></ul>
+    </section>
+
+    <!-- ===== LIMIT & VIP ===== -->
+    <section id="section-limit-vip" class="settings-section">
+      <h1>💎 Limit &amp; VIP/Premium</h1>
+      <p class="muted">
+        Command yang ditandai <code>limit: true</code> pada plugin akan memotong jatah harian
+        user biasa. User VIP/Premium selalu <b>unlimited</b> selama status masih aktif.
+      </p>
+
+      <label>Limit Harian Default (user biasa)</label>
+      <input id="setDefaultLimit" type="number" min="1" value="99" />
+      <button id="saveLimitBtn" class="btn-primary" style="margin-bottom: 24px;">Simpan Limit Default</button>
+      <p id="limitSaved" class="success-text"></p>
+
+      <h3 style="margin: 10px 0;">Tambah VIP/Premium</h3>
+      <label>Nomor WhatsApp</label>
+      <input id="premNumber" type="text" placeholder="628123456789" />
+      <label>Durasi (hari) — kosongkan / 0 untuk lifetime</label>
+      <input id="premDays" type="number" min="0" placeholder="30" />
+      <button id="addPremBtn" class="btn-primary" style="width:auto; padding:10px 18px;">Jadikan VIP</button>
+      <p id="premAdded" class="success-text"></p>
+
+      <h4 style="margin-top: 24px;">Daftar VIP/Premium Aktif</h4>
+      <div id="premiumTableWrap"></div>
+    </section>
+
+    <!-- ===== USERS ===== -->
+    <section id="section-users" class="settings-section">
+      <h1>👥 Daftar User</h1>
+      <div id="userTableWrap"></div>
+    </section>
+
+    <!-- ===== KELOLA AKUN (khusus master) ===== -->
+    <section id="section-admin-accounts" class="settings-section">
+      <h1>🗂️ Kelola Akun Terdaftar</h1>
+      <p class="muted">Daftar semua orang yang sudah register bot lewat platform ini. Khusus akun master.</p>
+      <div id="accountsTableWrap"></div>
+    </section>
+
+    <!-- ===== AKUN ===== -->
+    <section id="section-account" class="settings-section">
+      <h1>🔑 Akun Dashboard</h1>
+      <p class="muted">Username & nomor WhatsApp terdaftar tidak bisa diubah sendiri (hubungi admin bila perlu).</p>
+
+      <label style="margin-top: 8px; display:block;">Password Baru</label>
+      <input id="newPassword" type="password" placeholder="Minimal 6 karakter" />
+      <button id="changePasswordBtn" class="btn-primary">Ubah Password</button>
+      <p id="passwordChanged" class="success-text"></p>
+    </section>
+
+  </main>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/settings.js"></script>
+</body>
+</html>

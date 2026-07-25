@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login — WA Bot Dashboard</title>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+  <div class="login-page">
+    <a href="/" class="back-link">← Kembali ke Beranda</a>
+    <div class="login-box">
+      <div class="logo-dot" style="margin: 0 auto 14px;"></div>
+      <h1 style="text-align:center;">Login Admin</h1>
+      <p class="muted" style="text-align:center;">Masuk untuk mengatur bot sepenuhnya.</p>
+      <input id="loginUsername" type="text" placeholder="Username" autocomplete="username" />
+      <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" />
+      <button id="loginSubmit" class="btn-primary">Masuk</button>
+      <p id="loginError" class="error-text"></p>
+      <p class="muted" style="text-align:center; margin-top: 16px;">
+        Belum punya akun? <a href="/register.html" style="color: var(--cyan);">Daftar</a>
+      </p>
+    </div>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>

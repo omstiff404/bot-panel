@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daftar — WA Bot Dashboard</title>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+  <div class="login-page">
+    <a href="/" class="back-link">← Kembali ke Beranda</a>
+    <div class="login-box">
+      <div class="logo-dot" style="margin: 0 auto 14px;"></div>
+      <h1 style="text-align:center;">Daftar Bot Baru</h1>
+      <p class="muted" style="text-align:center;">
+        Verifikasi pakai nomor WhatsApp — kode dikirim otomatis oleh bot kami, tanpa email.
+      </p>
+
+      <!-- STEP 1: isi data & minta kode -->
+      <div id="stepForm">
+        <label>Username</label>
+        <input id="regUsername" type="text" placeholder="username_kamu" />
+        <label>Nomor WhatsApp</label>
+        <input id="regPhone" type="text" placeholder="628123456789" />
+        <label>Nama Bot (opsional)</label>
+        <input id="regBotName" type="text" placeholder="Bot Kamu" />
+        <label>Password</label>
+        <input id="regPassword" type="password" placeholder="Minimal 6 karakter" />
+        <button id="requestOtpBtn" class="btn-primary">Kirim Kode Verifikasi</button>
+        <p id="formError" class="error-text"></p>
+      </div>
+
+      <!-- STEP 2: masukkan kode OTP -->
+      <div id="stepOtp" class="hidden">
+        <p class="muted">Kode verifikasi sudah dikirim ke WhatsApp kamu. Masukkan di bawah ini:</p>
+        <label>Kode OTP</label>
+        <input id="otpCode" type="text" maxlength="6" placeholder="123456" />
+        <button id="confirmRegisterBtn" class="btn-primary">Selesaikan Pendaftaran</button>
+        <button id="backToFormBtn" class="btn-secondary">← Ubah data</button>
+        <p id="otpError" class="error-text"></p>
+      </div>
+
+      <p class="muted" style="text-align:center; margin-top: 16px;">
+        Sudah punya akun? <a href="/login.html" style="color: var(--cyan);">Login</a>
+      </p>
+    </div>
+  </div>
+  <script src="/js/register.js"></script>
+</body>
+</html>

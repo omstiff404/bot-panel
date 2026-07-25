@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WA Bot Dashboard 2026</title>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+
+  <!-- Burger button -->
+  <button id="burgerBtn" class="burger-btn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-head">
+      <div class="logo-dot"></div>
+      <h2>WA Bot 2026</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-panel="home">🏠 Beranda</button>
+      <button class="nav-item" data-panel="support">💬 Support</button>
+      <!-- Diisi dinamis lewat JS: Daftar+Login kalau belum login, Pengaturan+Logout kalau sudah -->
+      <div id="authNavSlot"></div>
+    </nav>
+    <div class="sidebar-foot">
+      <button id="themeToggle" class="theme-toggle">🌙 Mode Gelap</button>
+    </div>
+  </aside>
+  <div id="overlay" class="overlay"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ===== HOME PANEL ===== -->
+    <section id="panel-home" class="panel active">
+      <p id="homeModeLabel" class="muted" style="text-align:center;"></p>
+
+      <div class="hero">
+        <div class="avatar-wrap">
+          <img id="botAvatar" src="/img/default-avatar.svg" alt="avatar" />
+          <span id="statusDot" class="status-dot offline"></span>
+        </div>
+        <h1 id="botNameText">WA Bot 2026</h1>
+        <p id="statusText" class="status-text">Memuat...</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-label">⏱️ Runtime</span>
+          <span id="statRuntime" class="stat-value">0d 0h 0m</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">🕐 Jam (Asia/Jakarta)</span>
+          <span id="statClock" class="stat-value mono">00:00:00</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">⚙️ Total Fitur</span>
+          <span id="statFeatures" class="stat-value">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">👥 Total User</span>
+          <span id="statUsers" class="stat-value">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">🧑‍🤝‍🧑 Total Terdaftar</span>
+          <span id="statRegistered" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <div class="info-panel">
+        <h3>Informasi Bot</h3>
+        <ul class="info-list">
+          <li><span>Nomor Bot</span><b id="infoNumber">Disembunyikan</b></li>
+          <li><span>Push Name</span><b id="infoPushName">-</b></li>
+          <li><span>Timezone</span><b id="infoTimezone">Asia/Jakarta</b></li>
+        </ul>
+      </div>
+
+      <div id="ctaRegister" class="hidden" style="text-align:center; margin-top: 24px;">
+        <p class="muted">Mau punya bot WhatsApp sendiri seperti ini?</p>
+        <a href="/register.html" class="btn-primary" style="display:inline-block; width:auto; padding:12px 28px; text-decoration:none;">Daftar Bot Gratis</a>
+      </div>
+    </section>
+
+    <!-- ===== SUPPORT PANEL ===== -->
+    <section id="panel-support" class="panel">
+      <h1>💬 Support</h1>
+      <p class="muted">Butuh bantuan seputar bot ini? Hubungi kontak berikut.</p>
+      <a id="supportLink" href="#" target="_blank" class="btn-primary">Hubungi Support</a>
+    </section>
+
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/home.js"></script>
+</body>
+</html>

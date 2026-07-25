@@ -1,0 +1,41 @@
+/**
+ * CONTOH FORMAT FITUR BARU
+ * -------------------------------------------------------------
+ * Ini FILE CONTOH (ekstensi .txt supaya tidak ikut ter-load bot).
+ * Untuk menambah fitur sungguhan:
+ *   1. Buka dashboard -> Login -> sidebar "Tambah Fitur"
+ *   2. Isi "Nama File" contoh: sticker2.js
+ *   3. Tempel kode seperti di bawah ini pada kolom "Kode Plugin"
+ *   4. Klik "Simpan Fitur" -> otomatis termuat, langsung tampil di .menu
+ *
+ * PENTING soal require():
+ * Plugin kamu tersimpan di folder khusus akunmu sendiri, jadi JANGAN pakai
+ * require('../lib/...') atau require('../config') (path relatif akan salah).
+ * Untuk pakai fungsi bawaan (database, jidHelper, groupSettings, config),
+ * akses lewat registry global yang sudah disiapkan:
+ *
+ *   const db = global.WA_BOT.db;
+ *   const { normalizeNumber } = global.WA_BOT.jidHelper;
+ *   const { getSettings, saveSettings } = global.WA_BOT.config;
+ *
+ * npm package biasa (sharp, moment-timezone, dll) tetap boleh di-require
+ * langsung seperti biasa, itu tidak masalah.
+ * -------------------------------------------------------------
+ */
+
+module.exports = {
+  name: 'sticker2',             // nama unik plugin
+  command: ['sticker2'],        // satu atau beberapa trigger command
+  category: 'tools',            // dipakai untuk grouping otomatis di .menu
+  description: 'Contoh command custom',
+  owner: false,                 // true = hanya owner
+  admin: false,                 // true = hanya admin grup
+  group: false,                 // true = hanya boleh dipakai di grup
+  limit: true,                  // true = konsumsi limit harian (kecuali user VIP/premium)
+  async run(ctx) {
+    const { reply, userId, senderNumber } = ctx;
+    // ctx berisi: sock, m, from, isGroup, args, text, command, settings,
+    // isOwner, isAdmin, isBotAdmin, senderNumber, userId, plugins, reply()
+    await reply('Command custom kamu jalan di sini.');
+  }
+};
